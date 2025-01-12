@@ -3,41 +3,75 @@
 
 using namespace std;
 
+
+Color light_Green = {173, 204, 95, 255};
+Color dark_Green = {43, 51, 24, 255};
+
+//25 cells of 30 px size which = 750x750
+int cellSize = 30; //grid cellsize
+int cellCount = 25; //quantity of cells that will be displayed
+
+
+class Food{
+    public:
+        Vector2 position = {15, 10}; //x, y --> this will represent cells not pixels
+
+        void Draw(){
+            //constructor of DrawRectangles -> (pos.x, pos.y, width, height, color)
+            DrawRectangle(position.x * cellSize, position.y * cellSize, cellSize, cellSize, dark_Green); //we multiply x and y with the cellsize to make x and y the cell not pixel
+        }
+};
+
+
+
 int main () {
 
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 600;
-    int ball_x = 100;
-    int ball_y = 100;
-    int ball_speed_x = 5;
-    int ball_speed_y = 5;
-    int ball_radius = 15;
+    /*
+    Removed this because they can be calculated with the cellSize and count since
+    they are the main grid in the window
 
-    cout << "Hello World" << endl;
+    window vars
+    int window_Height = 750;
+    int window_Width = 750;
+    */
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "My first RAYLIB program!");
-    SetTargetFPS(60);
+    cout << "Starting the game..." << endl;
 
-    while (WindowShouldClose() == false){
-   
-        ball_x += ball_speed_x;
-        ball_y += ball_speed_y;
+    //Window Properties
+    InitWindow(cellSize*cellCount, cellSize*cellCount, "Retro Snake"); //creating a window
+    SetTargetFPS(60); //necessary before gameloop
 
-        if(ball_x + ball_radius >= SCREEN_WIDTH || ball_x - ball_radius <= 0)
-        {
-            ball_speed_x *= -1;
-        }
+    Food food = Food();
 
-        if(ball_y + ball_radius >= SCREEN_HEIGHT || ball_y - ball_radius <= 0)
-        {
-            ball_speed_y *= -1;
-        }
-        
-        BeginDrawing();
-            ClearBackground(BLACK);
-            DrawCircle(ball_x,ball_y,ball_radius, WHITE);
-        EndDrawing();
+    while(WindowShouldClose() == false){ //checks if escape or cross are pressed
+
+    BeginDrawing(); //Begins the canvas drawing
+
+    ClearBackground(light_Green);
+    food.Draw();
+
+
+    EndDrawing(); //Ends the canvas drawing 
+
     }
 
+
+
+
+
+
+    //closing the window
     CloseWindow();
+
+    return 0;
 }
+
+//structure of main:
+/*
+    event handling
+    updating positions
+    drawing objects
+*/
+
+//raylib uses structs for colors with rgb -> struct Color {red, green, blue, alpha} -> Color pure_White {255, 255, 255, 255}
+//vector2 also are structs
