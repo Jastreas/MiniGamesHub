@@ -124,6 +124,7 @@ class Game{ //better for mantainable code
                 snake.Update();
                 check_Collision_With_Food();
                 check_Collision_With_Edges();
+                check_Collision_With_Tail();
             }
         }
 
@@ -148,6 +149,16 @@ class Game{ //better for mantainable code
             snake.Reset();
             food.position = food.generate_Random_Position(snake.body);
             Running = false;
+        }
+
+        void check_Collision_With_Tail(){
+            deque<Vector2> headlessBody = snake.body;
+            headlessBody.pop_front();
+
+            if(element_In_Deque(snake.body[0], headlessBody)){
+                game_Over();
+            }
+
         }
 };
 
