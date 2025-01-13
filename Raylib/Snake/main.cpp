@@ -45,7 +45,6 @@ class Snake{
         body.pop_back();
         body.push_front(Vector2Add(body[0], direction));//this function returns a vector2 with the new coordinates of snake
     }
-
 };
 
 
@@ -114,6 +113,18 @@ int main () {
     //event handler
     if (event_Triggered(0.2)){
         snake.Update();
+    }
+    if((IsKeyPressed(KEY_W) || IsKeyPressed(KEY_UP)) && snake.direction.y != 1){ //up
+        snake.direction = {0, -1};
+    }
+    if((IsKeyPressed(KEY_D) || IsKeyPressed(KEY_RIGHT)) && snake.direction.x != -1){ //right
+        snake.direction = {1, 0};
+    }
+    if((IsKeyPressed(KEY_S) || IsKeyPressed(KEY_DOWN)) && snake.direction.y != -1){ //down
+        snake.direction = {0, 1};
+    }
+    if((IsKeyPressed(KEY_A) || IsKeyPressed(KEY_LEFT)) && snake.direction.x != 1){ //left
+        snake.direction = {-1, 0};
     }
 
     BeginDrawing(); //Begins the canvas drawing
