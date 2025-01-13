@@ -115,6 +115,21 @@ class Game{ //better for mantainable code
         Snake snake = Snake();
         Food food = Food(snake.body);
         int score = 0;
+        Sound eatSound;
+        Sound borderSound;
+
+        Game(){
+            InitAudioDevice();
+            eatSound = LoadSound("resources/audio/sfx/eat.mp3");
+            borderSound = LoadSound("resources/audio/sfx/wall.mp3");
+        }
+
+        ~Game(){
+            UnloadSound(eatSound);
+            UnloadSound(borderSound);
+            CloseAudioDevice();
+        }
+
 
         void Draw(){
             food.Draw();
@@ -134,6 +149,7 @@ class Game{ //better for mantainable code
             if(Vector2Equals(snake.body[0], food.position)){
                 food.position = food.generate_Random_Position(snake.body);
                 snake.addSegment = true;
+                PlaySound(eatSound);
                 score++;
             }
         }
@@ -153,6 +169,7 @@ class Game{ //better for mantainable code
             food.position = food.generate_Random_Position(snake.body);
             score = 0;
             Running = false;
+            PlaySound(borderSound);
         }
 
         void check_Collision_With_Tail(){
