@@ -120,9 +120,11 @@ class Game{ //better for mantainable code
         }
 
         void Update(){
-            snake.Update();
-            check_Collision_With_Food();
-            check_Collision_With_Edges();
+            if(Running){
+                snake.Update();
+                check_Collision_With_Food();
+                check_Collision_With_Edges();
+            }
         }
 
         void check_Collision_With_Food(){
@@ -145,6 +147,7 @@ class Game{ //better for mantainable code
         void game_Over(){
             snake.Reset();
             food.position = food.generate_Random_Position(snake.body);
+            Running = false;
         }
 };
 
@@ -186,6 +189,12 @@ int main () {
     }
     if((IsKeyPressed(KEY_A) || IsKeyPressed(KEY_LEFT)) && game.snake.direction.x != 1){ //left
         game.snake.direction = {-1, 0};
+    }
+    if(IsKeyPressed(KEY_SPACE)){
+        Running = true;
+    }
+    if(IsKeyPressed(KEY_P)){
+        Running = false;
     }
 
     BeginDrawing(); //Begins the canvas drawing
