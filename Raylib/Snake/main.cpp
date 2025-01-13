@@ -1,5 +1,6 @@
 #include <iostream>
 #include <raylib.h>
+#include <deque> //linked list
 
 using namespace std;
 
@@ -12,7 +13,20 @@ int cellSize = 30; //grid cellsize
 int cellCount = 25; //quantity of cells that will be displayed
 
 
+class Snake{
+    public:
+        deque<Vector2> body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}}; //initial snake will be 3 squares long
 
+    void Draw(){
+        for(unsigned int i = 0; i < body.size(); i++){
+            float x = body[i].x;
+            float y = body[i].y;
+            Rectangle segment = Rectangle{x*cellSize, y*cellSize, (float)cellSize, (float)cellSize};
+            DrawRectangleRounded(segment, 0.5, 6, dark_Green);
+        }
+    }
+
+};
 
 
 
@@ -69,13 +83,18 @@ int main () {
     InitWindow(cellSize*cellCount, cellSize*cellCount, "Retro Snake"); //creating a window
     SetTargetFPS(60); //necessary before gameloop
 
+
+    Snake snake = Snake();
     Food food = Food();
 
+
+    //loop
     while(WindowShouldClose() == false){ //checks if escape or cross are pressed
 
     BeginDrawing(); //Begins the canvas drawing
 
     ClearBackground(light_Green);
+    snake.Draw();
     food.Draw();
 
 
