@@ -1,6 +1,7 @@
 #include <iostream>
 #include <raylib.h>
 #include <deque> //linked list
+#include <raymath.h> //needed for the body push front method where we sum vector2 + vector2
 
 using namespace std;
 
@@ -12,10 +13,24 @@ Color dark_Green = {43, 51, 24, 255};
 int cellSize = 30; //grid cellsize
 int cellCount = 25; //quantity of cells that will be displayed
 
+//used to slow down the snake
+double last_Update_Time = 0; 
+bool event_Triggered(double interval){
+    double current_Time = GetTime();
+
+    if(current_Time - last_Update_Time >= interval){
+        last_Update_Time = current_Time;
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 class Snake{
     public:
         deque<Vector2> body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}}; //initial snake will be 3 squares long
+        Vector2 direction {1, 0};
 
     void Draw(){
         for(unsigned int i = 0; i < body.size(); i++){
@@ -24,6 +39,11 @@ class Snake{
             Rectangle segment = Rectangle{x*cellSize, y*cellSize, (float)cellSize, (float)cellSize};
             DrawRectangleRounded(segment, 0.5, 6, dark_Green);
         }
+    }
+
+    void Update(){
+        body.pop_back();
+        body.push_front(Vector2Add(body[0], direction));//this function returns a vector2 with the new coordinates of snake
     }
 
 };
@@ -91,6 +111,11 @@ int main () {
     //loop
     while(WindowShouldClose() == false){ //checks if escape or cross are pressed
 
+    //event handler
+    if (event_Triggered(0.2)){
+        snake.Update();
+    }
+
     BeginDrawing(); //Begins the canvas drawing
 
     ClearBackground(light_Green);
@@ -115,9 +140,9 @@ int main () {
 
 //structure of main:
 /*
-    event handling
-    updating positions
-    drawing objects
+    1. event handling
+    2. updating positions
+    3. drawing objects
 */
 
 //raylib uses structs for colors with rgb -> struct Color {red, green, blue, alpha} -> Color pure_White {255, 255, 255, 255}
