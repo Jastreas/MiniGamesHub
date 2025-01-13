@@ -1,3 +1,12 @@
+//Possible Updates:
+    /*
+        Solve the traspassing pressing sd sa or dw ds which makes player loose
+        Add different foods that buff or debuff the player
+        Break the code in different files so its more readable
+        Make the player have 3 lifes
+        When player reach n points make a character congratulate or add pressure to the player
+    */
+
 #include <iostream>
 #include <raylib.h>
 #include <deque> //linked list

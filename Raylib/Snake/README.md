@@ -1,26 +1,13 @@
-# Raylib C++ Starter Template
+## Current Version: 1.1
 
-Raylib C++ Starter Template for Visual Studio Code on Windows.
+# Used Raylib C++ Starter Template by Programming With Nick
 
-This demo project contains a bouncing ball raylib example program.
-
-It works with raylib version 4.5.
-Tested on both Windows 10 and Windows 11.
-
-# Video Tutorial
-
+# Ingame Preview
 <p align="center">
-  <img src="preview.jpg" alt="" width="800">
-</p>
-
-<p align="center">
-🎥 <a href="https://www.youtube.com/watch?v=PaAcVk5jUd8">Video Tutorial on YouTube</a>
+  <img src="preview.png" alt="" width="800">
 </p>
 
 <br>
 <br>
-<p align="center">
-| 📺 <a href="https://www.youtube.com/channel/UC3ivOTE5EgpmF2DHLBmWIWg">My YouTube Channel</a>
-| 🌍 <a href="https://www.programmingwithnick.com">My Website</a> | <br>
-</p>
 
+# Version 1.0 based on the Snake tutorial made by Programming With Nick.
