@@ -12,9 +12,11 @@ bool Running = true;
 //25 cells of 30 px size which = 750x750
 int cellSize = 30; //grid cellsize
 int cellCount = 25; //quantity of cells that will be displayed
+int offset = 75;
 
 //used to slow down the snake
 double last_Update_Time = 0;
+
 bool event_Triggered(double interval){
     double current_Time = GetTime();
 
@@ -36,7 +38,6 @@ bool element_In_Deque(Vector2 element, deque<Vector2> deque){
     return false;
 }
 
-
 class Snake{
     public:
         deque<Vector2> body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}}; //initial snake will be 3 squares long
@@ -47,7 +48,7 @@ class Snake{
         for(unsigned int i = 0; i < body.size(); i++){
             float x = body[i].x;
             float y = body[i].y;
-            Rectangle segment = Rectangle{x*cellSize, y*cellSize, (float)cellSize, (float)cellSize};
+            Rectangle segment = Rectangle{offset + x*cellSize,offset + y*cellSize, (float)cellSize, (float)cellSize};
             DrawRectangleRounded(segment, 0.5, 6, dark_Green);
         }
     }
@@ -89,7 +90,7 @@ class Food{
             //constructor of DrawRectangles -> (pos.x, pos.y, width, height, color)
             //DrawRectangle(position.x * cellSize, position.y * cellSize, cellSize, cellSize, dark_Green); //we multiply x and y with the cellsize to make x and y the cell not pixel
 
-            DrawTexture(apple_Texture, position.x * cellSize, position.y * cellSize, /*tint*/ WHITE);
+            DrawTexture(apple_Texture, offset + position.x * cellSize, offset + position.y * cellSize, /*tint*/ WHITE);
         }
 
         Vector2 generate_Random_Cell(){
@@ -177,7 +178,7 @@ int main () {
     cout << "Starting the game..." << endl;
 
     //Window Properties
-    InitWindow(cellSize*cellCount, cellSize*cellCount, "Retro Snake"); //creating a window
+    InitWindow(2*offset + cellSize*cellCount, 2*offset + cellSize*cellCount, "Retro Snake"); //creating a window
     SetTargetFPS(165); //necessary before gameloop
 
     Game game = Game();
@@ -211,7 +212,7 @@ int main () {
     BeginDrawing(); //Begins the canvas drawing
 
     ClearBackground(light_Green);
-    
+    DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5, (float)cellSize*cellCount+10, (float)cellSize*cellCount+10}, 5, dark_Green);
     game.Draw();
 
     EndDrawing(); //Ends the canvas drawing 
