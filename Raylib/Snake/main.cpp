@@ -15,10 +15,26 @@ int cellCount = 25; //quantity of cells that will be displayed
 class Food{
     public:
         Vector2 position = {15, 10}; //x, y --> this will represent cells not pixels
+        Texture2D apple_Texture;
+
+        //since I don't have the food png i will not load one, ill just use the square draw
+
+        Food(){ //constructor
+            Image image = LoadImage("resources/ingameassets/appleResized.png");
+            apple_Texture = LoadTextureFromImage(image);
+            UnloadImage(image);
+        }
+
+        ~Food(){ //destructor
+            UnloadTexture(apple_Texture);
+        }
 
         void Draw(){
             //constructor of DrawRectangles -> (pos.x, pos.y, width, height, color)
-            DrawRectangle(position.x * cellSize, position.y * cellSize, cellSize, cellSize, dark_Green); //we multiply x and y with the cellsize to make x and y the cell not pixel
+            //DrawRectangle(position.x * cellSize, position.y * cellSize, cellSize, cellSize, dark_Green); //we multiply x and y with the cellsize to make x and y the cell not pixel
+
+            DrawTexture(apple_Texture, position.x * cellSize, position.y * cellSize, /*tint*/ WHITE);
+
         }
 };
 
