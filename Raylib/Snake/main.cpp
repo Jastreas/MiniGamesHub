@@ -114,6 +114,7 @@ class Game{ //better for mantainable code
     public:
         Snake snake = Snake();
         Food food = Food(snake.body);
+        int score = 0;
 
         void Draw(){
             food.Draw();
@@ -133,6 +134,7 @@ class Game{ //better for mantainable code
             if(Vector2Equals(snake.body[0], food.position)){
                 food.position = food.generate_Random_Position(snake.body);
                 snake.addSegment = true;
+                score++;
             }
         }
 
@@ -149,6 +151,7 @@ class Game{ //better for mantainable code
         void game_Over(){
             snake.Reset();
             food.position = food.generate_Random_Position(snake.body);
+            score = 0;
             Running = false;
         }
 
@@ -213,6 +216,8 @@ int main () {
 
     ClearBackground(light_Green);
     DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5, (float)cellSize*cellCount+10, (float)cellSize*cellCount+10}, 5, dark_Green);
+    DrawText("Retro Snake", offset - 5, 20, 40, dark_Green);
+    DrawText(TextFormat("%i", game.score), offset - 5, offset + cellSize * cellCount + 10, 40, dark_Green);
     game.Draw();
 
     EndDrawing(); //Ends the canvas drawing 
